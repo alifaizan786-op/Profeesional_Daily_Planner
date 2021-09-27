@@ -1,11 +1,10 @@
 var liveClockEl = $(".liveClockEl")
 var saveButtonEl = $(".saveBtn")
+var hourCheck = moment().format("HH")
 
-
-
-
-
-
+// console.log(hourCheck)
+// console.log($(".custrow").children().attr("id"))
+// console.log($(".plannerEl").children().length)
 
 setInterval(function(){
     var currenttime = moment().format("MMM Do, YYYY HH:mm:ss");
@@ -13,13 +12,43 @@ setInterval(function(){
 });
 
 
+// for (var i = 0; i < $(".plannerEl").children().length; i++) {
+//     if (hourCheck > $(".custrow").children().attr("id") ){
+//         console.log("past fade")
+//         console.log(this.$("textarea"))
+//     }
+
+//     if (hourCheck === $(".custrow").children().attr("id") ){
+//         console.log("current red")
+//         console.log(this.$("textarea"))
+//     }
+
+//     if (hourCheck < $(".custrow").children().attr("id") ) {
+//         console.log("future green")
+//         console.log(this.$("textarea"))
+
+//     }
+// }
+
+
+
+
+
+
+
+
 saveButtonEl.on('click', function(event){
     event.preventDefault()
+    //LS being localStorage
+    var LSKey = $(this).siblings().attr(".col-sm-10").children().id//id of the textarea using "this" or "event.target" property
+    var LSVal = $(this).siblings().attr(".col-sm-10").children().val() //text of the textarea using "this" or "event.target" property
+    localStorage.setItem(LSKey, JSON.stringify(LSVal))
+
+    console.log(LSKey)
+    console.log(LSVal)
+    console.log($(this).siblings().attr(".col-sm-10").children().val())
 
 })
-
-
-
 
 var text9 = localStorage.getItem("9text")
 $("#9text").text(text9)
