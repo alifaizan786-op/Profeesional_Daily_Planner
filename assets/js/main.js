@@ -1,6 +1,14 @@
+$( document ).ready(function() { 
+
+
 var liveClockEl = $(".liveClockEl")
 var saveButtonEl = $(".saveBtn")
 var hourCheck = moment().format("HH")
+var lsKey = ''
+var lsVal = ''
+var timeblockEl= $(".custrow").children().attr("id")
+console.log(timeblockEl)
+console.log(hourCheck)
 
 // console.log(hourCheck)
 // console.log($(".custrow").children().attr("id"))
@@ -11,24 +19,17 @@ setInterval(function(){
     liveClockEl.text (currenttime);
 });
 
-
-// for (var i = 0; i < $(".plannerEl").children().length; i++) {
-//     if (hourCheck > $(".custrow").children().attr("id") ){
-//         console.log("past fade")
-//         console.log(this.$("textarea"))
-//     }
-
-//     if (hourCheck === $(".custrow").children().attr("id") ){
-//         console.log("current red")
-//         console.log(this.$("textarea"))
-//     }
-
-//     if (hourCheck < $(".custrow").children().attr("id") ) {
-//         console.log("future green")
-//         console.log(this.$("textarea"))
-
-//     }
-// }
+for (var i = 0; i < $(".custrow").length; i++) {
+    if (hourCheck === timeblockEl ){
+        $(".custrow").children().siblings(".custtext").children().attr("class", "bg-danger")
+    }
+    if (hourCheck > timeblockEl ){
+        $(".custrow").children().siblings(".custtext").children().attr("class", "bg-secondary")
+    }
+    if (hourCheck < timeblockEl ){
+        $(".custrow").children().siblings(".custtext").children().attr("class", "bg-success")
+    }
+}
 
 
 
@@ -37,17 +38,11 @@ setInterval(function(){
 
 
 
-saveButtonEl.on('click', function(event){
-    event.preventDefault()
-    //LS being localStorage
-    var LSKey = $(this).siblings().attr(".col-sm-10").children().id//id of the textarea using "this" or "event.target" property
-    var LSVal = $(this).siblings().attr(".col-sm-10").children().val() //text of the textarea using "this" or "event.target" property
-    localStorage.setItem(LSKey, JSON.stringify(LSVal))
-
-    console.log(LSKey)
-    console.log(LSVal)
-    console.log($(this).siblings().attr(".col-sm-10").children().val())
-
+saveButtonEl.on('click', function(){
+    console.log(this.id)
+    lsKey = $(this).parent().siblings('.custtext').children().attr("id")
+    lsVal = $(this).parent().siblings('.custtext').children().val()
+    localStorage.setItem(lsKey, lsVal)
 })
 
 var text9 = localStorage.getItem("9text")
@@ -76,3 +71,6 @@ $("#16text").text(text16)
 
 var text17 = localStorage.getItem("17text")
 $("#17text").text(text17)
+
+
+})
